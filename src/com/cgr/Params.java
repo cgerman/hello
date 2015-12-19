@@ -29,7 +29,7 @@ public class Params extends LinkedHashMap {
          String paramName = (String) iter.next();
          String paramValue = (String) get(paramName);
          sb.append(paramName);
-         if (paramValue != null) {
+         if (!paramValue.isEmpty()) {
             sb.append("=").append(paramValue);
          }
          if (iter.hasNext()) {
@@ -52,7 +52,7 @@ public class Params extends LinkedHashMap {
          if (arg.startsWith("-")) {
             paramName = arg;
             if (nextArg == null || nextArg.startsWith("-")) {
-               paramValue = null;
+               paramValue = "";
             } else {
                paramValue = nextArg;
                // In this loop step we are "consuming" two args of 
@@ -62,7 +62,7 @@ public class Params extends LinkedHashMap {
             }
          } else {
             paramName = arg;
-            paramValue = null;
+            paramValue = "";
          }
          put(paramName, paramValue);
       }
