@@ -10,10 +10,6 @@ public class Main {
    public static void main(String[] args) {
       Params pArgs = Params.fromCommandLineArgs(args);
       System.out.println("Hello world program arguments: " + pArgs.size());
-      for (Object o : pArgs.keySet()) {
-         String argName = (String) o;
-         String argValue = (String) pArgs.get(argName);
-         System.out.println("   name=" + argName + ", value=" + argValue);
-      }
+      System.out.println(pArgs.toString());
    }
 }

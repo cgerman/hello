@@ -3,6 +3,7 @@
  */
 package com.cgr;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class Params extends LinkedHashMap {
@@ -18,6 +19,25 @@ public class Params extends LinkedHashMap {
 
    public boolean contains(String paramName) {
       return get(paramName) != null;
+   }
+
+   public String toString() {
+      StringBuffer sb = new StringBuffer();
+      sb.append("{");
+      Iterator iter = keySet().iterator();
+      while (iter.hasNext()) {
+         String paramName = (String) iter.next();
+         String paramValue = (String) get(paramName);
+         sb.append(paramName);
+         if (paramValue != null) {
+            sb.append("=").append(paramValue);
+         }
+         if (iter.hasNext()) {
+            sb.append(", ");
+         }
+      }
+      sb.append("}");
+      return sb.toString();
    }
 
    //////////////////////////////////
