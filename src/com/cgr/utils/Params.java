@@ -1,7 +1,7 @@
 /**
  * Created by carlos on 19/12/2015.
  */
-package com.cgr;
+package com.cgr.utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -1,8 +1,9 @@
 /**
  * Created by carlos on 19/12/2015.
  */
-package com.cgr;
+package com.cgr.utils;
 
+import com.cgr.utils.Params;
 import junit.framework.TestCase;
 
 public class ParamsTest extends TestCase {
