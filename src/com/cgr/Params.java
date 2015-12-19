@@ -3,16 +3,26 @@
  */
 package com.cgr;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 
-public class ProgramArguments extends HashMap {
+public class Params extends LinkedHashMap {
 
-   public ProgramArguments(String[] args) {
-      parseArgs(args);
+   private Params() {
    }
 
-   private void parseArgs(String[] args) {
+   public static Params fromCommandLineArgs(String[] args) {
+      Params p = new Params();
+      p.parseCommandLineArgs(args);
+      return p;
+   }
+
+   public boolean contains(String paramName) {
+      return get(paramName) != null;
+   }
+
+   //////////////////////////////////
+
+   protected void parseCommandLineArgs(String[] args) {
       for (int i = 0; i < args.length; i++) {
          String arg = args[i];
          String nextArg = (i + 1 < args.length ? args[i + 1] : null);
@@ -31,8 +41,8 @@ public class ProgramArguments extends HashMap {
                i++;
             }
          } else {
-            paramName = String.valueOf(i);
-            paramValue = arg;
+            paramName = arg;
+            paramValue = null;
          }
          put(paramName, paramValue);
       }
