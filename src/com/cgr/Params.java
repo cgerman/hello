@@ -3,6 +3,8 @@
  */
 package com.cgr;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
@@ -14,6 +16,12 @@ public class Params extends LinkedHashMap {
    public static Params fromCommandLineArgs(String[] args) {
       Params p = new Params();
       p.parseCommandLineArgs(args);
+      return p;
+   }
+
+   public static Params fromUrl(String url) {
+      Params p = new Params();
+      p.parseUrl(url);
       return p;
    }
 
@@ -43,6 +51,7 @@ public class Params extends LinkedHashMap {
    //////////////////////////////////
 
    protected void parseCommandLineArgs(String[] args) {
+      if (args == null) return;
       for (int i = 0; i < args.length; i++) {
          String arg = args[i];
          String nextArg = (i + 1 < args.length ? args[i + 1] : null);
@@ -66,5 +75,36 @@ public class Params extends LinkedHashMap {
          }
          put(paramName, paramValue);
       }
+   }
+
+   protected void parseUrl(String url) {
+      if (url == null || url.isEmpty()) return;
+
+      try {
+         URL u = new URL(url);
+         String qs = u.getQuery();
+         if (qs == null) return;
+         
+         String[] params = qs.split("&");
+         for (int i = 0; i < params.length; i++) {
+            String param = params[i];
+            String[] kvPair = param.split("=");
+            if (kvPair.length != 2) {
+               throw new IllegalArgumentException("Malformed url or query string: " + url);
+            }
+            String paramName = kvPair[0];
+            String paramValue = kvPair[1];
+            put(paramName, paramValue);
+         }
+      } catch (MalformedURLException e) {
+         throw new IllegalArgumentException("Malformed url or query string: " + url);
+      }
+/*
+      int startPos = url.lastIndexOf("?");
+      if (startPos == -1) startPos = 0;
+      else startPos++;
+      String qs = url.substring(startPos);
+*/
+
    }
 }
